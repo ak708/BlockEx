@@ -6,12 +6,14 @@ function App() {
   const [blockNumber, setBlockNumber] = useState();
   const [gasPrice, setGasPrice] = useState();
   const [ens, setEns] = useState();
+  const [txns, setTxns] = useState();
   const [bal, setBal] = useState();
 
   useEffect(() => {
     async function getBlockNumber() {
       setBlockNumber(await alchemy.core.getBlockNumber());
       setGasPrice(Number(await alchemy.core.getGasPrice()));
+      setTxns(await alchemy.core.getBlockWithTransactions(blockNumber));
     }
 
     getBlockNumber();
@@ -66,8 +68,8 @@ function App() {
           <p>{bal ? "Enter ENS" : `${bal}`}</p>
         </div>
         <div className="bg-white p-4 shadow rounded">
-          <h2 className="text-xl font-bold">Market Cap</h2>
-          <p></p>
+          <h2 className="text-xl font-bold">Transactions</h2>
+          <p>{txns}</p>
         </div>
       </main>
     </div>
